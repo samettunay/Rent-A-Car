@@ -42,6 +42,14 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public TEntity GetById(Expression<Func<TEntity, bool>> filter)
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<TEntity>().SingleOrDefault(filter);
+            }
+        }
+
         public List<TEntity> GetByBrandId(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())

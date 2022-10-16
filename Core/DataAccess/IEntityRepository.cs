@@ -10,6 +10,7 @@ namespace Core.DataAccess
     {
         List<T> GetByBrandId(Expression<Func<T, bool>> filter);
         List<T> GetAll(Expression<Func<T, bool>> filter = null);
+        T GetById(Expression<Func<T, bool>> filter);
         void Add(T entity);
         void Delete(T entity);
         void Update(T entity);
