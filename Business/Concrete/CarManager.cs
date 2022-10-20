@@ -23,22 +23,22 @@ namespace Business.Concrete
         {
             if (car.Description.Length < 10)
             {
-                return new ErrorResult(true, Messages.DescriptionInvalid);
+                return new ErrorResult(Messages.DescriptionInvalid);
             }
             _carDal.Add(car);
-            return new SuccessResult(true, Messages.CarAdded);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            return new SuccessResult(true, Messages.CarDeleted);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
         public IResult Update(Car car)
         {
             _carDal.Update(car);
-            return new SuccessResult(true, Messages.CarUpdated);
+            return new SuccessResult(Messages.CarUpdated);
         }
 
         public IDataResult<List<Car>> GetAll()
