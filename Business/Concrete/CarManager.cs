@@ -29,10 +29,6 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
-            if (car.Description.Length < 10)
-            {
-                return new ErrorResult(Messages.DescriptionInvalid);
-            }
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
@@ -66,10 +62,6 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            if (DateTime.Now.Hour == 18)
-            {
-                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
-            }
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
