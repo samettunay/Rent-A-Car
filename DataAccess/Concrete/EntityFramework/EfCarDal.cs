@@ -22,48 +22,8 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  Id = c.Id,
-                                 BrandName = b.Name,
-                                 ColorName = a.Name,
-                                 ModelYear = c.ModelYear,
-                                 DailyPrice = c.DailyPrice,
-                                 Description = c.Description
-                             };
-                return result.ToList();
-            }
-        }
-
-        public List<CarDetailDto> GetCarDetailsByBrandId(int brandId)
-        {
-            using (RentACarContext context = new RentACarContext())
-            {
-                var result = from c in context.Cars
-                             join b in context.Brands on c.BrandId equals b.Id
-                             join a in context.Colors on c.ColorId equals a.Id
-                             where c.BrandId == brandId
-                             select new CarDetailDto
-                             {
-                                 Id = c.Id,
-                                 BrandName = b.Name,
-                                 ColorName = a.Name,
-                                 ModelYear = c.ModelYear,
-                                 DailyPrice = c.DailyPrice,
-                                 Description = c.Description
-                             };
-                return result.ToList();
-            }
-        }
-
-        public List<CarDetailDto> GetCarDetailsByColorId(int colorId)
-        {
-            using (RentACarContext context = new RentACarContext())
-            {
-                var result = from c in context.Cars
-                             join b in context.Brands on c.BrandId equals b.Id
-                             join a in context.Colors on c.ColorId equals a.Id
-                             where c.ColorId == colorId
-                             select new CarDetailDto
-                             {
-                                 Id = c.Id,
+                                 BrandId = b.Id,
+                                 ColorId = a.Id,
                                  BrandName = b.Name,
                                  ColorName = a.Name,
                                  ModelYear = c.ModelYear,
