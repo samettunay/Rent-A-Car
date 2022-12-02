@@ -34,5 +34,7 @@ namespace Business.Constants
         public static string ProductNameAlreadyExists = "Araba ismi zaten mevcut";
 
         public static string ThisCarIsAlreadyRentedInSelectedDateRange = "Araba bu tarihler arasında zaten kiralanmıştır.";
+
+        public static string RentalSuccessful = "Araç kiralandı.";
     }
 }

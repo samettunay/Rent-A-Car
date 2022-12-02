@@ -4,6 +4,7 @@ using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,14 @@ namespace Business.Concrete
         public IResult Add(Rental rental)
         {
             var result = RulesForAdding(rental);
-            if (!result.Success)
+
+            if (result!=null)
             {
                 return result;
             }
+
             _rentalDal.Add(rental);
+
             return new SuccessResult(Messages.RentalAdded);
         }
 
@@ -36,19 +40,23 @@ namespace Business.Concrete
             _rentalDal.Delete(rental);
             return new SuccessResult(Messages.RentalDeleted);
         }
-
-        public IDataResult<List<Rental>> GetAll()
-        {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
-        }
-
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
 
-        private IResult RulesForAdding(Rental rental)
+        public IDataResult<List<Rental>> GetAll()
+        {
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
+        }
+
+        public IResult RulesForAdding(Rental rental)
         {
             return BusinessRules.Run(
                 CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental));
@@ -69,5 +77,6 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
+
     }
 }
