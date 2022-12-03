@@ -36,5 +36,21 @@ namespace Business.Constants
         public static string ThisCarIsAlreadyRentedInSelectedDateRange = "Araba bu tarihler arasında zaten kiralanmıştır.";
 
         public static string RentalSuccessful = "Araç kiralandı.";
+
+        public static string ReturnDateCannotBeEarlierThanRentDate = "Dönüş tarihi kiralama tarihinden önce olamaz!";
+
+        public static string ReturnDateCannotBeLeftBlankAsThisCarWasAlsoRentedAtALaterDate = "Bu araç daha sonra bir tarihte kiralanmış olduğu için iade tarihi boş bırakılamaz";
+
+        public static string RentalDateCannotBeBeforeToday = "Kiralama tarihi geçmiş bir tarih olamaz!";
+
+        public static string ThisCarHasNotBeenReturnedYet = "Araç bu tarihler arasında galerimizde değil!";
+
+        public static string CardNumberMustConsistOfLettersOnly = "Kart Numarası Sadece Numaralardan Oluşmalıdır!";
+
+        public static string LastTwoDigitsOfYearMustBeEntered = "Yılın Son İki Hanesi Girilmelidir!";
+
+        public static string CardInformationIsIncorrect = "Kart bilgileri yanlış!";
+
+        public static string PayIsSuccessfull = "Ödeme Başarılı ile gerçekleşti!";
     }
 }

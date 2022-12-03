@@ -7,19 +7,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RentalsController : ControllerBase
+    public class PaymentsController : ControllerBase
     {
-        IRentalService _rentalService;
+        IPaymentService _paymentService;
 
-        public RentalsController(IRentalService rentalService)
+        public PaymentsController(IPaymentService paymentService)
         {
-            _rentalService = rentalService;
+            _paymentService = paymentService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _rentalService.GetAll();
+            var result = _paymentService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -27,21 +27,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("rulesforadding")]
-        public IActionResult RulesForAdding(Rental rental)
+        [HttpPost("pay")]
+        public IActionResult Pay(Payment payment)
         {
-            var result = _rentalService.RulesForAdding(rental);
-
-            if (result.Success) { 
-                return Ok(result);
-            } 
-            return BadRequest(result);
-        }
-
-        [HttpGet("getrentaldetails")]
-        public IActionResult GetRentalDetails()
-        {
-            var result = _rentalService.GetRentalDetails();
+            var result = _paymentService.Pay(payment);
             if (result.Success)
             {
                 return Ok(result);
@@ -50,9 +39,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Rental rental)
+        public IActionResult Add(Payment payment)
         {
-            var result = _rentalService.Add(rental);
+            var result = _paymentService.Add(payment);
             if (result.Success)
             {
                 return Ok(result);
@@ -61,9 +50,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Rental rental)
+        public IActionResult Update(Payment payment)
         {
-            var result = _rentalService.Update(rental);
+            var result = _paymentService.Update(payment);
             if (result.Success)
             {
                 return Ok(result);
@@ -72,9 +61,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete(Rental rental)
+        public IActionResult Delete(Payment payment)
         {
-            var result = _rentalService.Delete(rental);
+            var result = _paymentService.Delete(payment);
             if (result.Success)
             {
                 return Ok(result);

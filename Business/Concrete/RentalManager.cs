@@ -25,7 +25,7 @@ namespace Business.Concrete
         {
             var result = RulesForAdding(rental);
 
-            if (result!=null)
+            if (!result.Success)
             {
                 return result;
             }
@@ -58,8 +58,65 @@ namespace Business.Concrete
 
         public IResult RulesForAdding(Rental rental)
         {
-            return BusinessRules.Run(
-                CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental));
+            var result = BusinessRules.Run(
+                CheckIfRentDateIsBeforeToday(rental.RentDate),
+                CheckIfReturnDateIsBeforeRentDate(rental.ReturnDate, rental.RentDate),
+                CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental),
+                CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsNull(rental),
+                CheckIfThisCarHasBeenReturned(rental));
+            if (result != null)
+            {
+                return result;
+            }
+            return new SuccessResult("Ödeme sayfasına yönlendiriliyorsunuz.");
+        }
+        private IResult CheckIfRentDateIsBeforeToday(DateTime rentDate)
+        {
+            if (rentDate.Date < DateTime.Now.Date)
+            {
+                return new ErrorResult(Messages.RentalDateCannotBeBeforeToday);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsNull(Rental rental)
+        {
+            var result = _rentalDal.Get(r => 
+            r.CarId == rental.CarId 
+            && rental.ReturnDate == null 
+            && r.RentDate.Date > rental.RentDate.Date
+            );
+
+            if (result != null)
+            {
+                return new ErrorResult(Messages.ReturnDateCannotBeLeftBlankAsThisCarWasAlsoRentedAtALaterDate);
+            }
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfThisCarHasBeenReturned(Rental rental)
+        {
+            var result = _rentalDal.Get(r => r.CarId == rental.CarId && r.ReturnDate == null);
+
+            if (result != null)
+            {
+                if (rental.ReturnDate == null || rental.ReturnDate > result.RentDate)
+                {
+                    return new ErrorResult(Messages.ThisCarHasNotBeenReturnedYet);
+                }
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfReturnDateIsBeforeRentDate(DateTime? returnDate, DateTime rentDate)
+        {
+            if (returnDate != null)
+                if (returnDate < rentDate)
+                {
+                    return new ErrorResult(Messages.ReturnDateCannotBeEarlierThanRentDate);
+                }
+            return new SuccessResult();
         }
 
         private IResult CheckIfThisCarIsAlreadyRentedInSelectedDateRange(Rental rental)
