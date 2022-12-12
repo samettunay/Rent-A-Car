@@ -16,9 +16,27 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
+        public IResult Add(Color color)
+        {
+            _colorDal.Add(color);
+            return new SuccessResult("Renk Eklendi.");
+        }
+
+        public IResult Delete(Color color)
+        {
+            _colorDal.Delete(color);
+            return new SuccessResult("Renk Silindi.");
+        }
+
         public IDataResult<List<Color>> GetAll()
         {
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
+        }
+
+        public IResult Update(Color color)
+        {
+            _colorDal.Update(color);
+            return new SuccessResult("Renk güncellendi.");
         }
     }
 }

@@ -17,9 +17,27 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
+        public IResult Add(Brand brand)
+        {
+            _brandDal.Add(brand);
+            return new SuccessResult("Marka Eklendi.");
+        }
+
+        public IResult Delete(Brand brand)
+        {
+            _brandDal.Delete(brand);
+            return new SuccessResult("Marka Güncellendi.");
+        }
+
         public IDataResult<List<Brand>> GetAll()
         {
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
+        }
+
+        public IResult Update(Brand brand)
+        {
+            _brandDal.Update(brand);
+            return new SuccessResult("Marka Güncellendi.");
         }
     }
 }
