@@ -13,9 +13,5 @@
     <ProjectReference Include="..\Business\Business.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Uploads\Images\" />
-  </ItemGroup>
-
 
 </Project>

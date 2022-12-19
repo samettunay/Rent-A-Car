@@ -17,6 +17,7 @@ namespace Business.Constants
         public static string CustomerUpdated = "Müşteri güncellendi";
 
         public static string CarDeleted = "Araba silindi";
+        public static string CarNotFound = "Araba bulunamadı";
         public static string RentalDeleted = "Rental silindi";
         public static string UserDeleted = "Kullanıcı silindi";
         public static string CustomerDeleted = "Müşteri silindi";
@@ -52,5 +53,7 @@ namespace Business.Constants
         public static string CardInformationIsIncorrect = "Kart bilgileri yanlış!";
 
         public static string PayIsSuccessfull = "Ödeme Başarılı ile gerçekleşti!";
+        public static string CustomerNotFound = "Müşteri bulunamadı!";
+        public static string CustomerFindeksPointIsNotEnoughForThisCar = "Müşteri Findeks puanı bu araba için yeterli değil!";
     }
 }

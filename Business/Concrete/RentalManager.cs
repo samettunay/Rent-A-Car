@@ -15,10 +15,14 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
+        ICustomerService _customerService;
+        ICarService _carService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICustomerService customerService, ICarService carService)
         {
             _rentalDal = rentalDal;
+            _customerService = customerService;
+            _carService = carService;
         }
 
         public IResult Add(Rental rental)
@@ -62,6 +66,7 @@ namespace Business.Concrete
                 CheckIfRentDateIsBeforeToday(rental.RentDate),
                 CheckIfReturnDateIsBeforeRentDate(rental.ReturnDate, rental.RentDate),
                 CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental),
+                //CheckIfCustomerIsFindeksPointIsSufficientForThisCar(carId, customerId),
                 CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsNull(rental),
                 CheckIfThisCarHasBeenReturned(rental));
             if (result != null)
@@ -70,6 +75,24 @@ namespace Business.Concrete
             }
             return new SuccessResult("Ödeme sayfasına yönlendiriliyorsunuz.");
         }
+
+        private IResult CheckIfCustomerIsFindeksPointIsSufficientForThisCar(int carId, int customerId)
+        {
+            var customer = _customerService.GetCustomerById(customerId);
+            if (!customer.Success)
+                return new ErrorResult(Messages.CustomerNotFound);
+
+            var car = _carService.GetById(carId);
+            if (!car.Success)
+                return new ErrorResult(Messages.CarNotFound);
+
+            if (car.Data.FindexPoint > customer.Data.FindexPoint)
+                return new ErrorResult(Messages.CustomerFindeksPointIsNotEnoughForThisCar);
+            
+            return new SuccessResult();
+
+        }
+
         private IResult CheckIfRentDateIsBeforeToday(DateTime rentDate)
         {
             if (rentDate.Date < DateTime.Now.Date)

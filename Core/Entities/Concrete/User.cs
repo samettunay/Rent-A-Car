@@ -1,4 +1,8 @@
-﻿namespace Core.Entities.Concrete
+﻿
+
+using System.Text.Json.Serialization;
+
+namespace Core.Entities.Concrete
 {
     public class User : IEntity
     {
@@ -6,7 +10,9 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        [JsonIgnore]
         public byte[] PasswordSalt { get; set; }
+        [JsonIgnore]
         public byte[] PasswordHash { get; set; }
         public bool Status { get; set; }
     }
