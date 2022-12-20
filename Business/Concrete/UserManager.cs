@@ -35,6 +35,15 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserUpdated);
         }
 
+        public IResult UpdateUserNames(User user)
+        {
+            var updatedUser = _userDal.Get(u => u.Id == user.Id);
+            updatedUser.FirstName = user.FirstName;
+            updatedUser.LastName = user.LastName;
+            _userDal.Update(updatedUser);
+            return new SuccessResult(Messages.UserUpdated);
+        }
+
         public IResult Delete(User user)
         {
             _userDal.Delete(user);

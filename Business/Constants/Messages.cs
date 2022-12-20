@@ -55,5 +55,6 @@ namespace Business.Constants
         public static string PayIsSuccessfull = "Ödeme Başarılı ile gerçekleşti!";
         public static string CustomerNotFound = "Müşteri bulunamadı!";
         public static string CustomerFindeksPointIsNotEnoughForThisCar = "Müşteri Findeks puanı bu araba için yeterli değil!";
+        public static string UserPasswordUpdated = "Şifre değiştirildi";
     }
 }

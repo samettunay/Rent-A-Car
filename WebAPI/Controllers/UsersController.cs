@@ -48,6 +48,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("updateusernames")]
+        public IActionResult UpdateUserNames(User user)
+        {
+            var result = _userService.UpdateUserNames(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpDelete("delete")]
         public IActionResult Delete(User user)
         {

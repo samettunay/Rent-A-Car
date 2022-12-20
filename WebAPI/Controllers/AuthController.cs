@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,18 @@ namespace WebAPI.Controllers
 
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             var result = _authService.CreateAccessToken(registerResult.Data);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result.Message);
+        }
+
+        [HttpPost("updatepassword")]
+        public ActionResult UpdatePassword(UserForPasswordDto userForPasswordDto)
+        {
+            var result = _authService.UpdatePassword(userForPasswordDto, userForPasswordDto.NewPassword);
             if (result.Success)
             {
                 return Ok(result);

@@ -39,6 +39,30 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
+        public IDataResult<User> UpdatePassword(UserForPasswordDto userForPasswordDto, string newPassword)
+        {
+            //Business Rules
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
+            var updatedUser = _userService.GetById(userForPasswordDto.UserId).Data;
+
+            if (!HashingHelper.VerifyPasswordHash(userForPasswordDto.OldPassword, updatedUser.PasswordHash, updatedUser.PasswordSalt))
+            {
+                return new ErrorDataResult<User>(Messages.PasswordError);
+            }
+
+            if (!userForPasswordDto.NewPassword.Equals(userForPasswordDto.RepeatNewPassword))
+            {
+                return new ErrorDataResult<User>("Şifre tekrarı yanlış!");
+            };
+            
+            updatedUser.PasswordHash = passwordHash;
+            updatedUser.PasswordSalt = passwordSalt;
+
+            _userService.Update(updatedUser);
+            return new SuccessDataResult<User>(updatedUser, Messages.UserPasswordUpdated);
+        }
+
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
