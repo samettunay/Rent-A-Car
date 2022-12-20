@@ -13,8 +13,7 @@ namespace ConsoleUI
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             UserManager userManager = new UserManager(new EfUserDal());
             Customer customer1 = new Customer();
-            //userManager.Add(user1);
-            //customerManager.Add(customer1);
+            
             foreach (var customer in customerManager.GetAll().Data)
             {
                 Console.WriteLine(customer.CompanyName);
